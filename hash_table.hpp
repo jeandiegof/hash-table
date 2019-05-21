@@ -39,6 +39,7 @@ bool hash_table<K, T>::insert(const T& d) {
     }
 
     K k = hash(d);
+    //std::cout << "[" << (uint32_t) k << "] " << d << std::endl;
     // if the k place is already being used
     for (uint16_t i = 0; i < table_size; i++) {
         const uint32_t target_index = static_cast<uint32_t>((k + std::pow(i, 2))) % table_size;
@@ -76,16 +77,18 @@ int32_t hash_table<K, T>::search(const T& d) {
     return -1;
 }
 
+// This function uses Horner's method to calculate the hash
+//  p(x) = a0 + a1*x + a2*x² + a3*x³ ... anx^n
+//       = a0 + x(a1 + x(a2 + x(a3 + ... + x(an-1 + x(*an)))))
+// Otherwise we would be having integer overflows all the time
 template <typename K, typename T>
 K hash_table<K, T>::hash(const T& d) {
-    const uint8_t p = 57;
-
+    const uint8_t p = 79;
     K key = 0;
     for (std::uint8_t i = 0; i < d.size(); i++) {
         const uint8_t char_value = fix_range(d[i]);
-        key += char_value * std::pow(p, i);
+        key = (p * key + char_value) % table_size;
     }
-    key %= table_size;
     return key;
 }
 
