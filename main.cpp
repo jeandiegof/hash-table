@@ -5,6 +5,8 @@
 int main() {
     hash_table<uint32_t, std::string> hash_table;
 
+    //std::vector<std::string> const& names = {"jean diego silva fontenaA", "kakkak", "abobs"};
+
     std::cout << "Inserting data..." << std::endl;
     std::vector<std::string> const& names = get_data("Doc/nomes_10000.txt");
     for (auto const& name : names) {
@@ -14,8 +16,11 @@ int main() {
     std::cout << "Searching..." << std::endl;
     std::vector<std::string> const& targets = get_data("Doc/consultas.txt");
     for (auto const& name : targets) {
-        if (auto const& result = hash_table.search(name); result == 0) {
+        if (auto const& result = hash_table.search(name); result == -1) {
             std::cout << "[" << name << "] not found\n";
+        } else {
+            std::cout << "[" << name << "] found with " << (uint32_t) result << " tests";
+            std::cout << std::endl;
         }
     }
     //hash_table.print();
