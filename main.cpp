@@ -1,9 +1,11 @@
 #include <iostream>
 #include "hash_table.hpp"
 #include "input.hpp"
+#include "quadractic_probing.hpp"
 
 int main() {
-    hash_table<uint32_t, std::string> hash_table;
+    //hash_table<uint32_t, std::string> hash_table;
+    quadractic_probing<uint32_t, std::string> hash_table;
 
     //std::vector<std::string> const& names = {"jean diego silva fontenaA", "kakkak", "abobs"};
 

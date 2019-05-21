@@ -9,14 +9,14 @@ template <typename K, typename T>
 class hash_table {
    public:
     hash_table();
-    bool insert(const T& d);
-    int32_t search(const T& d);
+    virtual bool insert(const T& d);
+    virtual int32_t search(const T& d);
     void print();
     float load_factor();
     uint32_t collisions();
 
-   private:
-    K hash(const T& d);
+   protected:
+    virtual K hash(const T& d);
     uint8_t fix_range(const char& c);
     std::vector<T> table;
     bool _is_full;
