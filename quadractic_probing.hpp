@@ -62,10 +62,9 @@ bool quadractic_probing<K, T>::insert(const T& d) {
         }
         if (k == target_index) {
             hash_table<K, T>::_collisions++;
-            //std::cout << "collision for key " << (uint32_t) k << std::endl;
         }
     }
-    std::cout << "Boy, the table is full :/" << std::endl;
+    std::cout << "The table is full :/" << std::endl;
     std::cout << "Insertions: " << (uint16_t)hash_table<K, T>::_insertions;
     std::cout << std::endl;
     hash_table<K, T>::_is_full = true;

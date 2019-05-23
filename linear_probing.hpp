@@ -64,7 +64,7 @@ bool linear_probing<K, T>::insert(const T& d) {
             hash_table<K, T>::_collisions++;
         }
     }
-    std::cout << "Boy, the table is full :/" << std::endl;
+    std::cout << "The table is full :/" << std::endl;
     std::cout << "Insertions: " << (uint16_t)hash_table<K, T>::_insertions;
     std::cout << std::endl;
     hash_table<K, T>::_is_full = true;
