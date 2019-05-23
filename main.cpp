@@ -1,35 +1,41 @@
 #include <iostream>
+#include "analysis.hpp"
 #include "hash_table.hpp"
 #include "input.hpp"
+#include "linear_probing.hpp"
 #include "quadractic_probing.hpp"
 
 int main() {
-    //hash_table<uint32_t, std::string> hash_table;
-    quadractic_probing<uint32_t, std::string> hash_table;
+    // 12511 18979
+    constexpr uint32_t table_size = 18979;
+    std::vector<hash_table<uint32_t, std::string>*> tables;
+    tables.push_back(new linear_probing<uint32_t, std::string>);
+    tables.push_back(new linear_probing<uint32_t, std::string>);
+    tables.push_back(new quadractic_probing<uint32_t, std::string>);
+    tables.push_back(new quadractic_probing<uint32_t, std::string>);
 
-    //std::vector<std::string> const& names = {"jean diego silva fontenaA", "kakkak", "abobs"};
+    tables[0]->enable_hash2(false);
+    tables[1]->enable_hash2(true);
+    tables[2]->enable_hash2(false);
+    tables[3]->enable_hash2(true);
 
-    std::cout << "Inserting data..." << std::endl;
     std::vector<std::string> const& names = get_data("Doc/nomes_10000.txt");
-    for (auto const& name : names) {
-        hash_table.insert(name);
-    }
-
-    std::cout << "Searching..." << std::endl;
     std::vector<std::string> const& targets = get_data("Doc/consultas.txt");
-    for (auto const& name : targets) {
-        if (auto const& result = hash_table.search(name); result == -1) {
-            std::cout << "[" << name << "] not found\n";
-        } else {
-            std::cout << "[" << name << "] found with " << (uint32_t) result << " tests";
-            std::cout << std::endl;
-        }
+    std::vector<std::string> const& messages = {"\nLinear probing using Horner's method:\n",
+                                                "\nLinear probing using djb2 algorithm:\n",
+                                                "\nQuadractic probing using Horner's method:\n",
+                                                "\nQuadractic probing using djb2 algorithm:\n"};
+
+    uint8_t i = 0;
+    for (auto table : tables) {
+        table->set_size(table_size);
+        insert(names, *table);
+        std::cout << messages[i++] << std::flush;
+        auto result = search(targets, *table);
+        best_and_worst(result);
+        load_factor(*table);
+        collisions(*table);
     }
-    //hash_table.print();
-    std::cout << "Load factor: " << (float) hash_table.load_factor();
-    std::cout << "%" << std::endl;
-    std::cout << "Collisions: " << (uint32_t) hash_table.collisions();
-    std::cout << std::endl;
 
     return 0;
 }
