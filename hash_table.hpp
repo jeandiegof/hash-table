@@ -11,7 +11,7 @@ template <typename K, typename T>
 class hash_table {
    public:
     hash_table();
-    ~hash_table(){};
+    virtual ~hash_table(){};
     virtual bool insert(const T& d) = 0;
     virtual int32_t search(const T& d) = 0;
     void print();
