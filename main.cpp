@@ -27,7 +27,7 @@ int main() {
                                                 "\nquadratic probing using djb2 algorithm:\n"};
 
     uint8_t i = 0;
-    for (auto& table : tables) {
+    for (auto table : tables) {
         table->set_size(table_size);
         insert(names, *table);
         std::cout << messages[i++] << std::flush;

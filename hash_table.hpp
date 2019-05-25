@@ -23,6 +23,7 @@ class hash_table {
 
    protected:
     virtual K hash(const T& d) = 0;
+    virtual K hash2(const T& d) = 0;
     uint8_t fix_range(const char& c);
     std::vector<T> table;
     bool _is_full;

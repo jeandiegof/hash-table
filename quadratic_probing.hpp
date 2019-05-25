@@ -28,12 +28,7 @@ void quadratic_probing<K, T>::enable_hash2(bool opt) {
 // Otherwise we would be having integer overflows all the time
 template <typename K, typename T>
 K quadratic_probing<K, T>::hash(const T& d) {
-    const uint8_t p = 79;
-    K key = 0;
-    for (const auto& c : d) {
-        key = (p * key + c) % hash_table<K, T>::table.size();
-    }
-    return key;
+    return std::accumulate(d.begin(), d.end(), 0) % hash_table<K, T>::table.size();
 }
 
 // djb2 algorithm, by dan bernstein

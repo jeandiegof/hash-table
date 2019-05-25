@@ -1,4 +1,5 @@
 #pragma once
+#include <numeric>
 #include "hash_table.hpp"
 
 template <typename K, typename T>
@@ -11,8 +12,8 @@ class linear_probing : public hash_table<K, T> {
     void enable_hash2(bool opt);
 
    private:
-    virtual K hash(const T& d);
-    K hash2(const T& d);
+    K hash(const T& d) final;
+    K hash2(const T& d) final;
     bool _use_hash2;
 };
 
@@ -27,13 +28,7 @@ void linear_probing<K, T>::enable_hash2(bool opt) {
 // Otherwise we would be having integer overflows all the time
 template <typename K, typename T>
 K linear_probing<K, T>::hash(const T& d) {
-    //return hash2(d);
-    const uint8_t p = 31;
-    K key = 0;
-    for (const auto& c : d) {
-        key = (p * key + c) % hash_table<K, T>::table.size();
-    }
-    return key;
+    return std::accumulate(d.begin(), d.end(), 0) % hash_table<K, T>::table.size();
 }
 
 // djb2 algorithm, by dan bernstein
