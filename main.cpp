@@ -5,9 +5,18 @@
 #include "linear_probing.hpp"
 #include "quadratic_probing.hpp"
 
-int main() {
+int main(int argc, char** argv) {
+    if (argc != 2) {
+        std::cout << "Usage: " << argv[0];
+        std::cout << " table_size" << std::endl;
+        std::cout << " table_size must be a uint16_t value";
+        std::cout << std::endl;
+        return -1;
+    }
     // 12511 18979
-    constexpr uint32_t table_size = 18979;
+    const uint32_t table_size = atoi(argv[argc - 1]);
+    std::cout << "Table size: " << table_size;
+
     std::vector<hash_table<uint32_t, std::string>*> tables;
     tables.push_back(new linear_probing<uint32_t, std::string>);
     tables.push_back(new linear_probing<uint32_t, std::string>);
