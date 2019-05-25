@@ -21,9 +21,9 @@ int main() {
 
     std::vector<std::string> const& names = get_data("Doc/nomes_10000.txt");
     std::vector<std::string> const& targets = get_data("Doc/consultas.txt");
-    std::vector<std::string> const& messages = {"\nLinear probing using Horner's method:\n",
+    std::vector<std::string> const& messages = {"\nLinear probing using accumulate method:\n",
                                                 "\nLinear probing using djb2 algorithm:\n",
-                                                "\nquadratic probing using Horner's method:\n",
+                                                "\nquadratic probing using accumulate method:\n",
                                                 "\nquadratic probing using djb2 algorithm:\n"};
 
     uint8_t i = 0;
